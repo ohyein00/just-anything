@@ -3,11 +3,11 @@
 import { ShortcutResponse } from "@/app/api/shortcut/route.type";
 import styles from "./index.module.scss"
 
-interface ShortcutCategoryProps {
+interface ShortcutProps {
   shortcutData: ShortcutResponse | null
 }
 
-export default function ShortcutCategory({ shortcutData }: ShortcutCategoryProps) {
+export default function Shortcut({ shortcutData }: ShortcutProps) {
 
   
   const onClick = ()=>{

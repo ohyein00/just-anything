@@ -1,0 +1,42 @@
+.reviewContainer{
+    background-color: #f4f4ff;
+    margin-top:15px;
+    padding:15px 0 15px 0px;
+    .sectionTitle{
+        margin-left:20px;
+        margin-bottom:10px
+    }
+}
+.reviewSlideContainer{
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    .reviewSlide{
+        width: 65vw;
+        max-width:400px;
+        flex-shrink: 0;
+        background:white;
+        padding:12px;
+        border:1px solid #dedede;
+        margin-left:20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+    }
+    .reviewContent{
+        width:100%;
+        height:100%;
+        padding:7px;
+        background:#f1f1f1;
+        margin-top:10px;
+        border:1px solid #efefef;
+        font-size:0.8rem;
+        .reviewCardArea{
+            min-height:50%;
+        }
+        p{
+            min-height:2.2rem;
+        }
+    }
+}

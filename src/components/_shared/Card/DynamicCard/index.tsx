@@ -13,25 +13,28 @@ DynamicBase.Thumb = dynamic(async () => {
   const m = await import('@/components/_shared/Card/BaseCard');
   return m.default.Thumb;
 });
-
-DynamicBase.Title = dynamic(async () => {
+DynamicBase.Content = dynamic(async () => {
   const m = await import('@/components/_shared/Card/BaseCard');
-  return m.default.Title;
+  return m.default.Content;
+});
+DynamicBase.Content.Title = dynamic(async () => {
+  const m = await import('@/components/_shared/Card/BaseCard');
+  return m.default.Content.Title;
 });
 
-DynamicBase.Badge = dynamic(async () => {
+DynamicBase.Content.Badge = dynamic(async () => {
   const m = await import('@/components/_shared/Card/BaseCard');
-  return m.default.Badge;
+  return m.default.Content.Badge;
 });
 
-DynamicBase.Review = dynamic(async () => {
+DynamicBase.Content.Review = dynamic(async () => {
   const m = await import('@/components/_shared/Card/BaseCard');
-  return m.default.Review;
+  return m.default.Content.Review;
 });
 
-DynamicBase.SalePrice = dynamic(async () => {
+DynamicBase.Content.SalePrice = dynamic(async () => {
   const m = await import('@/components/_shared/Card/BaseCard');
-  return m.default.SalePrice;
+  return m.default.Content.SalePrice;
 });
 
 export const DynamicCard = DynamicBase as typeof Card;

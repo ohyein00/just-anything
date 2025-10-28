@@ -6,8 +6,14 @@
   row-gap: 10px;
   padding-left: 16px;
   padding-right: 16px;
-}
-.fullGrid {
-  grid-column: 1 / -1;
-  margin:0 -16px;
+
+  .productCardArea{
+    margin-top:10px;
+    margin-bottom:10px;
+  }
+
+  .fullGrid {
+    grid-column: 1 / -1;
+    margin:0 -16px;
+  }
 }

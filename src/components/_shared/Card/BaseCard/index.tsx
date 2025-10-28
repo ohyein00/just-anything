@@ -1,46 +1,8 @@
 import { ItemsResponse } from "@/app/api/items/route.type";
 import styles from "./index.module.scss";
 import { PropsWithChildren } from "react";
-import ReviewStarSvg from "@/assets/icon/review-star.svg"
+import ReviewStar from "@/components/_common/ReviewStar";
 
-
-// {"badges": [
-//   {
-//     "displayType": "RECTANGLE",
-//     "label": "쿠폰",
-//     "colorFont": "#ff4b50ff",
-//     "colorBackground": "#fff2f4ff",
-//     "image": null
-//   }
-// ],
-// "promotion": {
-//   "colorBackground": "#009ee7ff",
-//   "labels": [
-//     {
-//       "types": ["BOLD"],
-//       "text": "설 특가",
-//       "colorFont": "#fffce3ff",
-//       "size": 11
-//     }
-//   ]
-// }}
-// "badges": [
-//         {
-//           "displayType": "RECTANGLE",
-//           "label": "살수록할인",
-//           "colorFont": "#5f77a4ff",
-//           "colorBackground": "#f5f7ffff",
-//           "image": null
-//         },
-//         {
-//           "displayType": "RECTANGLE",
-//           "label": "쿠폰",
-//           "colorFont": "#ff4b50ff",
-//           "colorBackground": "#fff2f4ff",
-  //"image": "https://cdn.idus.kr/static/common/images/20230608/080508_special_logo.png"
-//         
-//         }
-//       
  export interface CardProps {
   name: string;
   image: string;
@@ -52,20 +14,22 @@ import ReviewStarSvg from "@/assets/icon/review-star.svg"
   promotion?:ItemsResponse['items'][number]['promotion'];
   thumbRadius?:0|10;
   ellipsisRow?:1|2;
+  type?:'vertical'|'normal'
 }
 
 export function CardSkeleton() {
   return (
-    <div className={styles.CardSkeleton}>
+    <div className={styles.cardSkeleton}>
       <div className={styles.image} />
     </div>
   );
 }
 function CardRoot({
-  children
-}: PropsWithChildren<{}>) {
+  children,
+  type='normal'
+}: PropsWithChildren<Pick<CardProps,'type'>>) {
   return (
-    <div className={styles.cardWrapper}>
+    <div className={`${styles.cardWrapper} ${styles[type]} card-wrapper`}>
       {children}
     </div>
   );
@@ -73,7 +37,7 @@ function CardRoot({
 
 function Badge({badges}:Required<Pick<CardProps,'badges'>>){
   return(
-    <div className={styles.badgeArea}>
+    <div className={`${styles.badgeArea}`}>
         {badges?.map(badge => (
           <span key={badge.label}
           style={{
@@ -90,10 +54,7 @@ function Badge({badges}:Required<Pick<CardProps,'badges'>>){
 function Review({review}:Required<Pick<CardProps,'review'>>){
   return(
     <div className={styles.reviewArea}>
-      <div className={styles.reviewStar}>
-      <ReviewStarSvg width={18} height={18} viewBox="0 0 24 24"/>
-      <b>{review.rate}</b> ({review.count})
-      </div>
+      <ReviewStar rate={review.rate} count={review.count}/>
       <div className={styles.content}>
         <span>후기</span>
         <p className="text-ellipsis">{review.contents}</p>
@@ -121,7 +82,7 @@ function Title({name,artistName,ellipsisRow=1}:Pick<CardProps,'name'|'artistName
     </div>
   )
 }
-function Thumb({image,name,thumbRadius,promotion}:Pick<CardProps,'image'|'name'|'thumbRadius'|'promotion'>){
+function Thumb({image,name,thumbRadius=0,promotion}:Pick<CardProps,'image'|'name'|'thumbRadius'|'promotion'>){
   const label = promotion?.labels[0]
   return(
     <div className={`${styles.thumbArea} r-${thumbRadius}`}>
@@ -146,6 +107,14 @@ function Thumb({image,name,thumbRadius,promotion}:Pick<CardProps,'image'|'name'|
   )
 }
 
-const Card = Object.assign(CardRoot, { Thumb, Title, Review, Badge, SalePrice });
+function CardContent({children}:PropsWithChildren<{}>){
+  return(
+    <div className={`${styles.cardContent}`}>
+    {children}  
+    </div>
+  )
+}
+const Content = Object.assign(CardContent,{Title, Review, Badge, SalePrice})
+const Card = Object.assign(CardRoot, { Thumb, Content });
 
 export default Card

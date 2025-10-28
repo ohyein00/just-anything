@@ -42,14 +42,16 @@ export default function GiftList({giftListData}:GiftListProps){
                         name={item.name}
                         thumbRadius={10}
                         />
-                        <DynamicCard.Title
-                        name={item.name}
-                        ellipsisRow={2}
-                        />
-                        <DynamicCard.SalePrice
-                        salePrice={item.priceSale}
-                        discountRate={item.saleRate}
-                        />
+                        <DynamicCard.Content>
+                            <DynamicCard.Content.Title
+                            name={item.name}
+                            ellipsisRow={2}
+                            />
+                            <DynamicCard.Content.SalePrice
+                            salePrice={item.priceSale}
+                            discountRate={item.saleRate}
+                            />
+                        </DynamicCard.Content>
                     </DynamicCard>
                 )
             }

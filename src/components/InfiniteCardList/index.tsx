@@ -33,8 +33,9 @@ export default function InfiniteCardList({ insertsNodes, itemListData }: Infinit
         {data?.map((item, i) => {
           const row = i + 1;
           return (
-            <Fragment key={item.uuid}>
-                   <DynamicCard 
+            <Fragment key={item.uuid} >
+              <div className={styles.productCardArea}>
+                  <DynamicCard 
                     key={item.uuid}
                     >
                         <DynamicCard.Thumb
@@ -42,28 +43,31 @@ export default function InfiniteCardList({ insertsNodes, itemListData }: Infinit
                         name={item.name}
                         promotion={item.promotion}
                         />
-                        <DynamicCard.Title
-                        name={item.name}
-                        ellipsisRow={2}
-                        artistName={item.artistName}
-                        />
-                        <DynamicCard.SalePrice
-                        salePrice={item.salePrice}
-                        discountRate={item.discountRate}
-                        />
-                        <DynamicCard.Badge
-                        badges={item.badges}
-                        />
-                        <DynamicCard.Review
-                        review={item.review}
-                        />
+                        <DynamicCard.Content>
+                          <DynamicCard.Content.Title
+                          name={item.name}
+                          ellipsisRow={2}
+                          artistName={item.artistName}
+                          />
+                          <DynamicCard.Content.SalePrice
+                          salePrice={item.salePrice}
+                          discountRate={item.discountRate}
+                          />
+                          <DynamicCard.Content.Badge
+                          badges={item.badges}
+                          />
+                          <DynamicCard.Content.Review
+                          review={item.review}
+                          />
+                        </DynamicCard.Content>
                     </DynamicCard>
+                  </div>
               {insertsNodes?.[row] ? (
                 <div className={styles.fullGrid}>{insertsNodes[row]}</div>
               ) : null}
             </Fragment>
           );
-        })}
+        })};
       </div>
       {isLoading && (
         <>
