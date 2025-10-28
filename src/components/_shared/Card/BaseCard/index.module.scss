@@ -1,0 +1,111 @@
+.cardWrapper {
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  margin-top:15px;
+  .titleArea{
+    width:100%;
+    margin-top:10px;
+    h3{
+      width:100%;
+      font-size:0.9rem;
+      font-weight:normal;
+    }
+    .artistTitle{
+      color:#a0a0a0;
+      font-size:0.7rem;
+    }
+  }
+  .badgeArea{
+    span{
+      display:inline-block;
+      margin-right:5px;
+      font-size:0.7rem;
+      padding:2px 5px;
+      white-space: no-wrap;
+      font-weight:500;
+      img{
+        display:inline-block;
+        max-width:13px;
+        vertical-align: text-bottom;
+      }
+    }
+  }
+  .salePriceArea{
+    display:flex;
+    align-items: center;
+    b{
+      font-weight:bold;
+      font-size:1rem;
+    }
+    strong{
+      color:#d16443
+    }
+    p+p{
+      margin-left:3px;
+    }
+  }
+  .reviewArea{
+    margin-top:8px;
+    .reviewStar{
+      display:flex;
+      align-items: center;
+      font-size:0.8rem;
+      margin-top:3px;
+      b{display:inline-block;margin-right:3px;
+        color:#545454;
+      }
+      color:#a0a0a0;
+    }
+
+
+    .content{
+      display:flex;
+      width:100%;
+      font-size:0.7rem;
+      margin-top:5px;
+      color:#6f6f6f;
+      span{
+        display:inline-block;
+        min-width:1.7rem;
+        text-align:center;
+        background:#efefef;
+        border-radius: 5px;
+        color:#9f9f9f;
+        margin-right:3px;
+      }
+      p{
+        
+      }
+    }
+  }
+  .thumbArea{
+    position:relative;
+    width:100%;
+    padding-bottom:100%;
+    overflow: hidden;
+    img{
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      overflow: hidden;
+    }
+    .r10{
+      border-radius: 10px;
+    }
+    .promotionArea{
+      position:absolute;
+      bottom:0;
+      left:0;
+    }
+  }
+}
+
+.CardSkeleton {
+  width: 100%;
+  padding-bottom: 125%;
+  border-radius: 3%;
+}
