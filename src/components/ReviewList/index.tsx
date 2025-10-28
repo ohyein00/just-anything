@@ -40,11 +40,12 @@ export default function ReviewList({reviewListData}:ReviewProps){
             {
                 reviewListData.products.map((product)=>
                     <div className={styles.reviewSlide} key={product.uuid}>
-                        <button onClick={()=>onClickEvent()(product.productName)} className={styles.reviewCardArea}>
+                        <a onClick={()=>onClickEvent()(product.productName)} className={styles.reviewCardArea}>
                         <Card 
                         type='vertical'
                         >                          
                             <Card.Thumb
+                            id={product.uuid}
                             image={product.image}
                             name={product.productName}
                             />
@@ -60,7 +61,7 @@ export default function ReviewList({reviewListData}:ReviewProps){
                                 />
                             </Card.Content>
                         </Card>
-                        </button>
+                        </a>
                         <div className={styles.reviewContent}>
                             <p className="text-ellipsis ellipsis-row-3">
                             {product.reviewInfo[0].text}

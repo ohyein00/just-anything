@@ -39,6 +39,7 @@ export default function InfiniteCardList({ insertsNodes, itemListData }: Infinit
                     key={item.uuid}
                     >
                         <DynamicCard.Thumb
+                        id={item.uuid}
                         image={item.image}
                         name={item.name}
                         promotion={item.promotion}

@@ -1,9 +1,12 @@
+
 import { ItemsResponse } from "@/app/api/items/route.type";
 import styles from "./index.module.scss";
 import { PropsWithChildren } from "react";
 import ReviewStar from "@/components/_common/ReviewStar";
+import FavoriteButton from "@/components/_shared/FavoriteButton";
 
  export interface CardProps {
+  id:string;
   name: string;
   image: string;
   artistName?: string;
@@ -82,7 +85,7 @@ function Title({name,artistName,ellipsisRow=1}:Pick<CardProps,'name'|'artistName
     </div>
   )
 }
-function Thumb({image,name,thumbRadius=0,promotion}:Pick<CardProps,'image'|'name'|'thumbRadius'|'promotion'>){
+function Thumb({image,name,thumbRadius=0,promotion,id}:Pick<CardProps,'id'|'image'|'name'|'thumbRadius'|'promotion'>){
   const label = promotion?.labels[0]
   return(
     <div className={`${styles.thumbArea} r-${thumbRadius}`}>
@@ -102,11 +105,18 @@ function Thumb({image,name,thumbRadius=0,promotion}:Pick<CardProps,'image'|'name
           </span>
         </div>
         )}
-        
+       <FavoriteButton id={id} defaultChecked={false}/> 
     </div>
   )
 }
 
+function CardHead({children}:PropsWithChildren<{}>){
+  return(
+    <div className={`${styles.cardHead}`}>
+    {children}  
+    </div>
+  )
+}
 function CardContent({children}:PropsWithChildren<{}>){
   return(
     <div className={`${styles.cardContent}`}>

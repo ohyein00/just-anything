@@ -38,6 +38,7 @@ export default function GiftList({giftListData}:GiftListProps){
                     key={item.artistUuid}
                     >
                         <DynamicCard.Thumb
+                        id={item.artistUuid}
                         image={item.thumbImageUrl}
                         name={item.name}
                         thumbRadius={10}
