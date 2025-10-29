@@ -1,28 +1,29 @@
-.titleBox{
-    text-align: center;
-    margin:10px 10px;
+.titleBox {
+  text-align: center;
+  margin: 10px 10px;
 }
-.shortcutContainer{
-    width:100%;
-    padding:0px 20px;
-    padding-bottom:10px;
-    display:flex;
-    overflow-x: auto;
-    title{
-        font-size:1.2rem;
-        font-weight: bold;
-        margin:0 10px;
+.shortcutContainer {
+  width: 100%;
+  padding: 0px 20px;
+  padding-bottom: 10px;
+  display: flex;
+  overflow-x: auto;
+  title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 10px;
+  }
+  .box {
+    margin: 5px 18px 5px 0;
+    width: 17vw;
+    max-width: 90px;
+    img {
+      margin-bottom: 5px;
     }
-    .box{
-        margin:5px 18px 5px 0;
-        width:17vw;
-        img{
-            margin-bottom:5px;
-        }
-        p{
-            width:100%;
-            text-align: center;;
-            font-size:0.8rem;
-        }
+    p {
+      width: 100%;
+      text-align: center;
+      font-size: 0.8rem;
     }
+  }
 }

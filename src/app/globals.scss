@@ -73,10 +73,10 @@ a {
   text-decoration: none;
 }
 
-.divider{
-  width:100%;
-  border-top:1px;
-  height:1px;
+.divider {
+  width: 100%;
+  border-top: 1px;
+  height: 1px;
   border-color: #e3e3e3;
 }
 
@@ -88,38 +88,37 @@ a {
   margin: 0 auto;
 }
 
-.title-2{
+.title-2 {
   font-size: 1.1rem;
-  font-weight:bold;
+  font-weight: bold;
 }
 
-.r-10{
+.r-10 {
   border-radius: 10px;
 }
 
 //말줄임
-.text-ellipsis{
-  width:100%;
+.text-ellipsis {
+  width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden; 
+  overflow: hidden;
 
-  &.ellipsis-row-2{
-    white-space:inherit;
+  &.ellipsis-row-2 {
+    white-space: inherit;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient: vertical;
-  }
-  
-  &.ellipsis-row-3{
-    white-space:inherit;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp:3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
 
+  &.ellipsis-row-3 {
+    white-space: inherit;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
 }

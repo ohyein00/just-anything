@@ -1,14 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { readFile } from "fs/promises";
 import { join } from "path";
 import { GiftResponse } from "./route.type";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const page = searchParams.get("page") || "1";
-
-    const filePath = join(process.cwd(), "public", "server", "data", 'unit-gift.json');
+    const filePath = join(process.cwd(), "public", "server", "data", "unit-gift.json");
     const fileContents = await readFile(filePath, "utf8");
     const jsonContents = JSON.parse(fileContents) as GiftResponse;
     return NextResponse.json(jsonContents);

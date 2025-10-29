@@ -1,57 +1,61 @@
-'use client'
+"use client";
 
-import { MouseEvent, useState, useEffect, useCallback } from "react";
+import { MouseEvent, useState, useEffect, useCallback, startTransition } from "react";
 import favoriteOn from "@/assets/icon/favorite-on.png";
 import favoriteOff from "@/assets/icon/favorite-off.png";
-import styles from "./index.module.scss"
+import styles from "./index.module.scss";
 
-interface FavoriteProps{
-    id:string;
-    defaultChecked?:boolean;
+interface FavoriteProps {
+  id: string;
+  defaultChecked?: boolean;
 }
-export default function FavoriteButton({id,defaultChecked=false}:FavoriteProps){
-    const [checked,setChecked] =useState<boolean>(defaultChecked)
-    const localStorageKey = 'product-favorite-id-list'
+const localStorageKey = "product-favorite-id-list";
+export default function FavoriteButton({ id }: FavoriteProps) {
+  const [isChecked, setIsChecked] = useState<boolean>();
 
-    const onClickEvent = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-        event.stopPropagation();
+  const checkImgSrc = (): string => {
+    return isChecked ? favoriteOn.src : favoriteOff.src;
+  };
 
-        if (typeof window === "undefined") return;
+  const onClickEvent = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      if (typeof window === "undefined") return;
 
-        const stored = localStorage.getItem(localStorageKey);
-        const list: string[] = stored ? JSON.parse(stored) as string[] : [];
-        const setObjList = new Set(list)
-        
-        setChecked(prev => {
-            const curChecked = !prev;
-            if(!curChecked){
-                setObjList.delete(id)
-            }else{
-                setObjList.add(id)
-            }
-            localStorage.setItem(localStorageKey, JSON.stringify([...setObjList]))
-            return curChecked;
-        });
-    }, [id])
+      const stored = localStorage.getItem(localStorageKey);
+      const list: string[] = stored ? (JSON.parse(stored) as string[]) : [];
+      const setObjList = new Set(list);
 
-    //최초 셋팅
-    useEffect(() => {
-        if (typeof window === "undefined") return;
-        const stored = localStorage.getItem(localStorageKey);
-        if(!stored) return
-        const favoriteList = JSON.parse(stored) as string[]
-        if(favoriteList.indexOf(id)>-1){
-            setChecked(true)
+      setIsChecked(prev => {
+        const curChecked = !prev;
+        if (!curChecked) {
+          setObjList.delete(id);
+        } else {
+          setObjList.add(id);
         }
-      }, []);
+        localStorage.setItem(localStorageKey, JSON.stringify([...setObjList]));
+        return curChecked;
+      });
+      event.stopPropagation();
+    },
+    [id]
+  );
 
-    return(
-        <button 
-            onClick={onClickEvent} 
-            className={styles.favoriteButton}
-            style={{
-                backgroundImage: `url(${checked ? favoriteOn.src : favoriteOff.src})`
-            }}
-        />
-    )
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const raw = localStorage.getItem(localStorageKey);
+      const list = raw ? (JSON.parse(raw) as string[]) : [];
+      const next = list.includes(id);
+      startTransition(() => setIsChecked(next));
+    }
+  }, [id]);
+
+  return (
+    <button
+      onClick={onClickEvent}
+      className={styles.favoriteButton}
+      style={{
+        backgroundImage: `url(${checkImgSrc()})`,
+      }}
+    />
+  );
 }

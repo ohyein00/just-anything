@@ -1,20 +1,15 @@
 "use client";
-import dynamic from "next/dynamic";
-import { CardSkeleton } from "@/components/_shared/Card/BaseCard";
-import { CardProps } from "@/components/_shared/Card/BaseCard";
-import { Fragment, PropsWithChildren, ReactElement, useMemo } from "react";
+import { CardSkeleton } from "@/components/_shared/Card";
+import { Fragment } from "react";
 import { ItemsResponse } from "@/app/api/items/route.type";
-import { Children, isValidElement } from "react";
 import styles from "./index.module.scss";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { fetchItems } from "@/lib/fetch/items";
-import { DynamicCard } from "@/components/_shared/Card/DynamicCard";
+import Card from "@/components/_shared/Card";
 
 const getItemList = async (page = 1) => {
   return await fetchItems(page);
 };
-
-
 
 interface InfiniteCardListProps {
   itemListData: ItemsResponse | null;
@@ -33,42 +28,36 @@ export default function InfiniteCardList({ insertsNodes, itemListData }: Infinit
         {data?.map((item, i) => {
           const row = i + 1;
           return (
-            <Fragment key={item.uuid} >
+            <Fragment key={item.uuid}>
               <div className={styles.productCardArea}>
-                  <DynamicCard 
-                    key={item.uuid}
-                    >
-                        <DynamicCard.Thumb
-                        id={item.uuid}
-                        image={item.image}
-                        name={item.name}
-                        promotion={item.promotion}
-                        />
-                        <DynamicCard.Content>
-                          <DynamicCard.Content.Title
-                          name={item.name}
-                          ellipsisRow={2}
-                          artistName={item.artistName}
-                          />
-                          <DynamicCard.Content.SalePrice
-                          salePrice={item.salePrice}
-                          discountRate={item.discountRate}
-                          />
-                          <DynamicCard.Content.Badge
-                          badges={item.badges}
-                          />
-                          <DynamicCard.Content.Review
-                          review={item.review}
-                          />
-                        </DynamicCard.Content>
-                    </DynamicCard>
-                  </div>
+                <Card key={item.uuid}>
+                  <Card.Thumb
+                    id={item.uuid}
+                    image={item.image}
+                    name={item.name}
+                    promotion={item.promotion}
+                  />
+                  <Card.Content>
+                    <Card.Content.Title
+                      name={item.name}
+                      ellipsisRow={2}
+                      artistName={item.artistName}
+                    />
+                    <Card.Content.SalePrice
+                      salePrice={item.salePrice}
+                      discountRate={item.discountRate}
+                    />
+                    <Card.Content.Badge badges={item.badges} />
+                    <Card.Content.Review review={item.review} />
+                  </Card.Content>
+                </Card>
+              </div>
               {insertsNodes?.[row] ? (
                 <div className={styles.fullGrid}>{insertsNodes[row]}</div>
               ) : null}
             </Fragment>
           );
-        })};
+        })}
       </div>
       {isLoading && (
         <>

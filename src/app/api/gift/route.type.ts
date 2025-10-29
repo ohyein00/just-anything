@@ -2,7 +2,7 @@ type HexColor = `#${string}`;
 
 export interface GiftTitle {
   text: string;
-  types: Array<"BOLD" | "NORMAL">; 
+  types: Array<"BOLD" | "NORMAL">;
   size: number;
   color: HexColor;
   colorWeb: HexColor;
@@ -22,9 +22,9 @@ export interface GiftItem {
 
 export interface GiftResponse {
   id: string;
-  icon: string; 
-  targetId: string; 
-  title: GiftTitle[]; 
+  icon: string;
+  targetId: string;
+  title: GiftTitle[];
   themeTitle: string;
-  items: GiftItem[]; 
+  items: GiftItem[];
 }

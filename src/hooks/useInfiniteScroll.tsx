@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 interface Pagination {
   current: number;
@@ -40,9 +40,8 @@ export default function useInfiniteScroll<Item extends { uuid?: string }>({
   const sentinelRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
-  const isEnd = useMemo(() => pagination.current === pagination.total, [pagination]);
-
   const loadNextPage = useCallback(async () => {
+    const isEnd = pagination.current === pagination.total;
     if (isEnd) return;
     abortRef.current?.abort();
     abortRef.current = new AbortController();
@@ -66,7 +65,7 @@ export default function useInfiniteScroll<Item extends { uuid?: string }>({
     setPagination(res.pagination);
     setIsLoading(false);
     setIsError(false);
-  }, [pagination, isEnd, fetcher]);
+  }, [pagination, fetcher]);
 
   useEffect(() => {
     if (!sentinelRef.current) return;

@@ -1,6 +1,4 @@
-import { ItemsResponse } from "@/app/api/items/route.type";
 import { ReviewResponse } from "@/app/api/review/route.type";
-import { ShortcutResponse } from "@/app/api/shortcut/route.type";
 import { baseUrl } from "@/lib/constants/url";
 
 export async function fetchReview(): Promise<ReviewResponse | null> {
@@ -12,9 +10,8 @@ export async function fetchReview(): Promise<ReviewResponse | null> {
     }
 
     return await response.json();
-
-   } catch (error) {
+  } catch (error) {
     console.error("Error fetching review:", error);
-    return null
-    };
+    return null;
+  }
 }

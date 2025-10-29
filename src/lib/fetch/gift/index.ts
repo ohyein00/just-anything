@@ -1,6 +1,4 @@
 import { GiftResponse } from "@/app/api/gift/route.type";
-import { ItemsResponse } from "@/app/api/items/route.type";
-import { ShortcutResponse } from "@/app/api/shortcut/route.type";
 import { baseUrl } from "@/lib/constants/url";
 
 export async function fetchGift(): Promise<GiftResponse | null> {
@@ -12,8 +10,8 @@ export async function fetchGift(): Promise<GiftResponse | null> {
     }
 
     return await response.json();
-   } catch (error) {
+  } catch (error) {
     console.error("Error fetching gift:", error);
-    return null
-    };
+    return null;
+  }
 }

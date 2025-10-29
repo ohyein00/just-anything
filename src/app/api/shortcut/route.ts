@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { readFile } from "fs/promises";
 import { join } from "path";
 import { ShortcutResponse } from "./route.type";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const filePath = join(process.cwd(), "public", "server", "data", "unit-shortcut.json");
     const fileContents = await readFile(filePath, "utf8");

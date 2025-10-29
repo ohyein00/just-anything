@@ -1,10 +1,5 @@
-import Image from "next/image";
 import "./globals.scss";
-import Card, { CardSkeleton } from "@/components/_shared/Card/BaseCard";
 import { fetchItems } from "@/lib/fetch/items";
-import { ItemsResponse } from "@/app/api/items/route.type";
-import dynamic from "next/dynamic";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { fetchShortcut } from "@/lib/fetch/shortcurt";
 import Shortcut from "@/components/Shortcut";
 import InfiniteCardList from "@/components/InfiniteCardList";
@@ -13,19 +8,18 @@ import GiftList from "@/components/GiftList";
 import { fetchReview } from "@/lib/fetch/review";
 import ReviewList from "@/components/ReviewList";
 
-
-export default async function Home({ children }: { children: React.ReactNode }) {
-  const [itemsRes, shortcutRes,giftRes,reviewData] = await Promise.allSettled([
-    fetchItems(1),   
-    fetchShortcut(),   
+export default async function Home({}: { children: React.ReactNode }) {
+  const [itemsRes, shortcutRes, giftRes, reviewData] = await Promise.allSettled([
+    fetchItems(1),
+    fetchShortcut(),
     fetchGift(),
-    fetchReview()
+    fetchReview(),
   ]);
-  
-  const itemListData = itemsRes.status==='fulfilled' ? itemsRes.value : null
-  const shortcutData = shortcutRes.status==='fulfilled' ? shortcutRes.value : null
-  const giftListData = giftRes.status==='fulfilled' ? giftRes.value : null
-  const reviewListData = reviewData.status==='fulfilled' ? reviewData.value : null
+
+  const itemListData = itemsRes.status === "fulfilled" ? itemsRes.value : null;
+  const shortcutData = shortcutRes.status === "fulfilled" ? shortcutRes.value : null;
+  const giftListData = giftRes.status === "fulfilled" ? giftRes.value : null;
+  const reviewListData = reviewData.status === "fulfilled" ? reviewData.value : null;
 
   return (
     <main className="main-container">
@@ -33,9 +27,9 @@ export default async function Home({ children }: { children: React.ReactNode }) 
         <InfiniteCardList
           itemListData={itemListData}
           insertsNodes={{
-            4: shortcutData ? <Shortcut shortcutData={shortcutData}/> : null,
-            8: giftListData ? <GiftList giftListData={giftListData}/> : null,
-            12: reviewListData ? <ReviewList reviewListData={reviewListData}/> : null,
+            4: shortcutData ? <Shortcut shortcutData={shortcutData} /> : null,
+            8: giftListData ? <GiftList giftListData={giftListData} /> : null,
+            12: reviewListData ? <ReviewList reviewListData={reviewListData} /> : null,
           }}
         />
       </div>
