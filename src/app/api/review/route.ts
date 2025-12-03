@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 import { ReviewResponse } from "./route.type";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const filePath = join(process.cwd(), "public", "server", "data", "unit-review.json");
     const fileContents = await readFile(filePath, "utf8");

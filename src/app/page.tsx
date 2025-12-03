@@ -1,11 +1,9 @@
 import "./globals.scss";
-import { fetchItems } from "@/lib/fetch/items";
-import { fetchShortcut } from "@/lib/fetch/shortcurt";
+import { fetchItems, fetchShortcut, fetchGift, fetchReview } from "@/lib/fetch";
+
 import Shortcut from "@/components/Shortcut";
 import InfiniteCardList from "@/components/InfiniteCardList";
-import { fetchGift } from "@/lib/fetch/gift";
 import GiftList from "@/components/GiftList";
-import { fetchReview } from "@/lib/fetch/review";
 import ReviewList from "@/components/ReviewList";
 
 export default async function Home({}: { children: React.ReactNode }) {

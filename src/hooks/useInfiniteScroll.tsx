@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 interface Pagination {
   current: number;
@@ -12,7 +12,6 @@ type FetcherResponse<Item> = {
 
 interface UseInfiniteScrollProps<Item> {
   fetcher: (page: number) => Promise<FetcherResponse<Item> | null>;
-  startPage?: number;
   initialData?: FetcherResponse<Item>;
 }
 
@@ -21,6 +20,7 @@ interface UseInfiniteScrollReturn<Item> {
   isError: boolean;
   isLoading: boolean;
   sentinelRef: RefObject<HTMLDivElement | null>;
+  loadMore: () => Promise<void>;
 }
 
 export default function useInfiniteScroll<Item extends { uuid?: string }>({
@@ -28,28 +28,23 @@ export default function useInfiniteScroll<Item extends { uuid?: string }>({
   initialData,
 }: UseInfiniteScrollProps<Item>): UseInfiniteScrollReturn<Item> {
   const [dataList, setDataList] = useState<Item[]>(initialData?.items ?? []);
-  const [pagination, setPagination] = useState<Pagination>(
-    initialData?.pagination ?? {
-      current: 0,
-      total: 1,
-    }
-  );
+  const [current, setCurrent] = useState<number>(initialData?.pagination.current ?? 0);
+  const [total, setTotal] = useState<number>(initialData?.pagination.total ?? 1);
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
-  const abortRef = useRef<AbortController | null>(null);
 
-  const loadNextPage = useCallback(async () => {
-    const isEnd = pagination.current === pagination.total;
-    if (isEnd) return;
-    abortRef.current?.abort();
-    abortRef.current = new AbortController();
+  const hasNextPage = useMemo(() => current < total, [current, total]);
 
+  const loadMore = useCallback(async () => {
+    if (!hasNextPage || isLoading) return;
     setIsLoading(true);
 
-    const pageNum = pagination.current + 1;
+    const pageNum = current + 1;
+
     const res = await fetcher(pageNum);
+
     if (!res) {
       setIsError(true);
       setIsLoading(false);
@@ -62,18 +57,18 @@ export default function useInfiniteScroll<Item extends { uuid?: string }>({
       return prev.concat(newItems);
     });
 
-    setPagination(res.pagination);
+    setCurrent(res.pagination.current);
+    setTotal(res.pagination.total);
     setIsLoading(false);
     setIsError(false);
-  }, [pagination, fetcher]);
+  }, [current, hasNextPage, isLoading, fetcher]);
 
   useEffect(() => {
     if (!sentinelRef.current) return;
-
     const io = new IntersectionObserver(
       entries => {
-        if (entries[0].isIntersecting) {
-          loadNextPage();
+        if (entries[0].isIntersecting && !isError) {
+          loadMore();
         }
       },
       { rootMargin: "200px 0px" }
@@ -81,12 +76,13 @@ export default function useInfiniteScroll<Item extends { uuid?: string }>({
 
     io.observe(sentinelRef.current);
     return () => io.disconnect();
-  }, [loadNextPage]);
+  }, [loadMore, isError]);
 
   return {
     data: dataList,
     isError,
     isLoading,
     sentinelRef,
+    loadMore,
   };
 }

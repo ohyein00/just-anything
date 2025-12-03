@@ -2,8 +2,9 @@ import { ItemsResponse } from "@/app/api/items/route.type";
 import styles from "./index.module.scss";
 import { PropsWithChildren } from "react";
 import ReviewStar from "@/components/_common/ReviewStar";
-
+import AdImage from "@/assets/icon/ad.png";
 import FavoriteButton from "@/components/_shared/FavoriteButton";
+import Image from "next/image";
 
 export interface CardProps {
   id: string;
@@ -18,6 +19,7 @@ export interface CardProps {
   thumbRadius?: 0 | 10;
   ellipsisRow?: 1 | 2;
   type?: "vertical" | "normal";
+  isAdBadgeVisible?: boolean;
 }
 
 export function CardSkeleton() {
@@ -82,11 +84,22 @@ function SalePrice({ salePrice, discountRate }: Pick<CardProps, "salePrice" | "d
 function Title({
   name,
   artistName,
+  isAdBadgeVisible,
   ellipsisRow = 1,
-}: Pick<CardProps, "name" | "artistName" | "ellipsisRow">) {
+}: Pick<CardProps, "name" | "artistName" | "ellipsisRow" | "isAdBadgeVisible">) {
   return (
     <div className={`${styles.titleArea}`}>
-      {artistName && <p className={`${styles.artistTitle} text-ellipsis`}>{artistName}</p>}
+      {artistName && (
+        <div className={`${styles.artistTitle} text-ellipsis`}>
+          {artistName}
+          {isAdBadgeVisible && (
+            <p className={`${styles.isAdBadgeVisible}`}>
+              <Image src={AdImage} width={20} alt={"광고"} />
+            </p>
+          )}
+        </div>
+      )}
+
       <h3 className={`text-ellipsis ellipsis-row-${ellipsisRow}`}>{name}</h3>
     </div>
   );

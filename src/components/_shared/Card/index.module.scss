@@ -26,6 +26,9 @@
       font-weight: normal;
     }
     .artistTitle {
+
+      display:flex;
+      justify-content: space-between;
       color: #a0a0a0;
       font-size: 0.7rem;
     }
